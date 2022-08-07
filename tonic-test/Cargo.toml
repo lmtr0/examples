@@ -1,0 +1,50 @@
+[package]
+name = "tonic-example"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "server"
+path = "src/server.rs"
+
+[[bin]]
+name = "client"
+path = "src/client.rs"
+
+[dependencies]
+async-stream = "0.3"
+futures = { version = "0.3", default-features = false, features = ["alloc"] }
+prost = "0.9"
+tokio = { version = "1.0", features = [ "rt-multi-thread", "time", "fs", "macros", "net",] }
+tokio-stream = { version = "0.1", features = ["net"] }
+tonic = { version = "*", features = ["tls", "compression"] }
+tower = { version = "0.4" }
+# Required for routeguide
+rand = "0.8"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+# Tracing
+tracing = "0.1.16"
+tracing-attributes = "0.1"
+tracing-futures = "0.2"
+tracing-subscriber = { version = "0.3", features = ["tracing-log"] }
+# Required for wellknown types
+prost-types = "0.9"
+# Hyper example
+http = "0.2"
+http-body = "0.4.2"
+hyper = { version = "0.14", features = ["full"] }
+pin-project = "1.0"
+warp = "0.3"
+# # Reflection example
+# listenfd = "0.3"
+# tonic-reflection = { path = "../tonic-reflection" }
+# grpc-web example
+bytes = "1"
+# tonic-web = { path = "../tonic-web" }
+# streaming example
+h2 = "0.3"
+
+
+[build-dependencies]
+tonic-build = { version = "*", features = ["prost", "compression"] }

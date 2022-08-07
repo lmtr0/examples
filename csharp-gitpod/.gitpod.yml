@@ -1,0 +1,9 @@
+image:
+  file: .gitpod.Dockerfile
+tasks:
+  - init: |
+      echo "Enjoy"
+      export PATH=$PATH:$HOME/.dotnet
+vscode:
+  extensions:
+    - muhammad-sammy.csharp

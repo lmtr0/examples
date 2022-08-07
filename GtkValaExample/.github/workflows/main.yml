@@ -1,0 +1,14 @@
+name: Build
+on: [push]
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: sudo apt-get install -y python3 python3-pip python3-setuptools python3-wheel ninja-build build-essential llvm gtk-4
+      - run: sudo add-apt-repository ppa:vala-team
+      - run: sudo apt update
+      - run: sudo apt install valac
+      - run: pip3 install meson
+      - run: CC=clang meson build
+      - run: meson compile -C build
