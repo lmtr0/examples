@@ -7,6 +7,8 @@ import (
 	api "server/api"
 	"time"
 
+	db "server/db"
+
 	"github.com/gin-gonic/gin"
 	"github.com/go-co-op/gocron"
 )
@@ -17,6 +19,8 @@ type User struct {
 }
 
 func main() {
+	db.Dbref = db.NewDb()
+
 	fmt.Println("Hello, world!")
 
 	user := User{
