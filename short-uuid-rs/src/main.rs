@@ -1,5 +1,5 @@
 use sodiumoxide::base64;
-use uuid::{Builder, Uuid};
+use uuid::{Uuid};
 
 fn main() {
 
