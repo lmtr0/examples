@@ -1,4 +1,5 @@
 import { Component } from 'preact';
+import {} from "wmr"
 import styles from './style.module.css';
 
 
