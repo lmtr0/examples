@@ -1,7 +1,5 @@
 use s3::{creds::Credentials, region::Region, Bucket};
 
-// use serde_json::json;
-
 struct Storage {
     region: Region,
     credentials: Credentials,
@@ -12,18 +10,18 @@ const MESSAGE: &str = "{ \"name\": \"value\" }";
 
 #[tokio::main]
 async fn main() {
-    // fern::Dispatch::new()
-    //     .format(|out, message, record| {
-    //         out.finish(format_args!(
-    //             "[{}][{}] {}",
-    //             record.target(),
-    //             record.level(),
-    //             message
-    //         ))
-    //     })
-    //     .level(log::LevelFilter::Debug)
-    //     .chain(std::io::stdout())
-    //     .apply().unwrap();
+    fern::Dispatch::new()
+        .format(|out, message, record| {
+            out.finish(format_args!(
+                "[{}][{}] {}",
+                record.target(),
+                record.level(),
+                message
+            ))
+        })
+        .level(log::LevelFilter::Debug)
+        .chain(std::io::stdout())
+        .apply().unwrap();
     dotenv::dotenv().expect("Failed to load evironment");
 
     let secret_key = std::env::var("SECRET_KEY").expect("Consider putting CF_SHA256_API_KEY in your .env file");
