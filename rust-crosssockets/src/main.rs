@@ -32,6 +32,7 @@ async fn main() -> std::io::Result<()> {
         // Note: we wait for a client to connect.
         let opt = ServerOptions::new(); 
         loop {
+            // Pipes are "single threaded" only one client and server at a this point, but no limit on the creation of server listeners Hm!
             let server = opt.create(PIPE_NAME)?;
             server.connect().await?;
 
