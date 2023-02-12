@@ -1,0 +1,19 @@
+[package]
+name = "rust-crosssockets"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tokio = {version = "1.25.0", features = ["full"]}
+async-stream = "0.3"
+
+[[bin]]
+name = "client"
+path = "src/client.rs"
+
+# [target.'cfg(windows)'.dependencies]
+# tokio = {version = "1.25.0", features = ["full"]}
+
+# [target.'cfg(unix)'.dependencies]
