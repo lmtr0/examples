@@ -13,6 +13,7 @@ lazy_static = "1.4.0"
 prometheus-static-metric = "0.5.1"
 tonic = "0.8.3"
 prost = "0.11.6"
+tower = "0.4.13"
 
 [build-dependencies]
 tonic-build = "0.8.4"

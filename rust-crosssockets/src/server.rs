@@ -1,24 +1,21 @@
-use std::{io::BufReader, time::Duration};
+mod pb {
+    tonic::include_proto!("hello.v1");
+}
 
-mod proto;
-
-use proto::hello::{
-    hello_service_server::{HelloService, HelloServiceServer},
+use pb::{
+    hello_server::{Hello, HelloServer},
     HelloMessage,
 };
-use tokio::net::windows::named_pipe::NamedPipeServer;
-use tonic::{transport::server::Connected, Request, Response, Status};
+use tonic::{Request, Response, Status};
 
 
 #[derive(Debug, Default)]
 struct Server {}
 
 #[tonic::async_trait]
-impl HelloService for Server {
+impl Hello for Server {
     async fn hello(&self, req: Request<HelloMessage>) -> Result<Response<HelloMessage>, Status> {
-        let message = req.into_inner();
-
-        dbg!(message);
+        dbg!(req);
         Ok(Response::new(HelloMessage {
             message: format!("Received message"),
         }))
@@ -77,7 +74,7 @@ async fn main() -> std::io::Result<()> {
         println!("GreeterServer listening on {}", PIPE_NAME);
 
         tonic::transport::Server::builder()
-            .add_service(HelloServiceServer::new(greeter))
+            .add_service(HelloServer::new(greeter))
             .serve_with_incoming(incoming)
             // .serve(addr)
             .await

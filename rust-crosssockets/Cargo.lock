@@ -694,6 +694,7 @@ dependencies = [
  "tokio",
  "tonic",
  "tonic-build",
+ "tower",
 ]
 
 [[package]]
