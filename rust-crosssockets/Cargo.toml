@@ -8,10 +8,27 @@ edition = "2021"
 [dependencies]
 tokio = {version = "1.25.0", features = ["full"]}
 async-stream = "0.3"
+prometheus = "0"
+lazy_static = "1.4.0"
+prometheus-static-metric = "0.5.1"
+tonic = "0.8.3"
+prost = "0.11.6"
+
+[build-dependencies]
+tonic-build = "0.8.4"
 
 [[bin]]
 name = "client"
 path = "src/client.rs"
+
+[[bin]]
+name = "server"
+path = "src/server.rs"
+
+[[bin]]
+name = "prometheus"
+path = "src/prometheus.rs"
+
 
 # [target.'cfg(windows)'.dependencies]
 # tokio = {version = "1.25.0", features = ["full"]}
