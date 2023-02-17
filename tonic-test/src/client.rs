@@ -4,6 +4,7 @@ pub mod pb {
 
 use futures::stream::Stream;
 use http::Uri;
+#[cfg(target_family="unix")]
 use tokio::net::UnixStream;
 use std::time::Duration;
 use tokio_stream::StreamExt;
@@ -66,7 +67,10 @@ async fn bidirectional_streaming_echo_throttle(client: &mut EchoClient<Channel>,
         println!("\trecived message: `{}`", recived.message);
     }
 }
+/*
 
+    For windows used named pipes and https://docs.rs/tokio/latest/tokio/net/windows/named_pipe/struct.ServerOptions.html#method.first_pipe_instance to check if it's the first instance
+*/
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let channel = Endpoint::try_from("http://[::]:50051")?
