@@ -7,6 +7,7 @@ use std::{
     path::{self, PathBuf},
     str,
 };
+use rustls::ConfigBuilder;
 use tracing::level_filters::LevelFilter;
 use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
@@ -64,14 +65,21 @@ async fn main() -> Result<()> {
         }
     };
 
-    // let key = rustls_pki_types::PrivateKeyDer::Pkcs1(key.into());
-    // let certs = vec![rustls_pki_types::CertificateDer::from(cert)];
-    let key = rustls::PrivateKey(key.into());
-    let certs = vec![rustls::Certificate(cert)];
+    let key = rustls_pki_types::PrivateKeyDer::Pkcs1(key.into());
+    let certs = vec![rustls_pki_types::CertificateDer::from(cert)];
+    // let key = rustls::PrivateKey(key.into());
+    // let certs = vec![rustls::Certificate(cert)];
+
 
     let mut server_crypto = rustls::ServerConfig::builder()
-        .with_safe_defaults()
         .with_no_client_auth()
+        // .with_client_cert_verifier()
+        // .with_safe_default_cipher_suites()
+        // .with_safe_default_kx_groups()
+        // .with_safe_default_protocol_versions()
+        // .unwrap()
+        // .with_safe_defaults()
+        // .with_no_client_auth()
         .with_single_cert(certs, key)?;
     server_crypto.alpn_protocols = quic_rust::ALPN_QUIC_HTTP
         .iter()
@@ -174,6 +182,10 @@ async fn handle_request(
         format!("failed to process request: {e}\n").into_bytes()
     });
     // Write the response
+    send.write_all(&resp)
+        .await
+        .map_err(|e| anyhow!("failed to send response: {}", e))?;
+
     send.write_all(&resp)
         .await
         .map_err(|e| anyhow!("failed to send response: {}", e))?;

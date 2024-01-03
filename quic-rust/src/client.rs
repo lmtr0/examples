@@ -11,7 +11,7 @@ use std::{
     time::{Duration, Instant},
 };
 
-use anyhow::{anyhow, Result};
+use anyhow::{anyhow, Context, Result};
 use clap::Parser;
 use tracing::{error, info};
 use url::Url;
@@ -117,6 +117,8 @@ async fn main() -> Result<()> {
     send.finish()
         .await
         .map_err(|e| anyhow!("failed to shutdown stream: {}", e))?;
+
+
     let response_start = Instant::now();
     eprintln!("request sent at {:?}", response_start - start);
     let resp = recv
@@ -132,6 +134,8 @@ async fn main() -> Result<()> {
     io::stdout().write_all(&resp).unwrap();
     io::stdout().flush().unwrap();
     conn.close(0u32.into(), b"done");
+
+    let (send, rec) = conn.open_bi().await.context("Failed to open bidirectional stream")?;
 
     // Give the server a fair chance to receive the close packet
     endpoint.wait_idle().await;
