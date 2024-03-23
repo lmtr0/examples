@@ -7,6 +7,7 @@ use std::{
     path::{self, PathBuf},
     str,
 };
+use quinn::crypto::{Keys, Session, UnsupportedVersion};
 use rustls::ConfigBuilder;
 use tracing::level_filters::LevelFilter;
 use tracing_subscriber::layer::SubscriberExt;
@@ -202,3 +203,18 @@ pub async fn process_get() -> Result<Vec<u8>> {
 
     Ok(data)
 }
+
+
+// impl quinn::crypto::ServerConfig for rustls::ServerConfig {
+//     fn initial_keys(&self, version: u32, dst_cid: &quinn_proto::shared::ConnectionId, side: quinn_proto::Side) -> std::result::Result<Keys, UnsupportedVersion> {
+//         todo!()
+//     }
+//
+//     fn retry_tag(&self, version: u32, orig_dst_cid: &quinn_proto::shared::ConnectionId, packet: &[u8]) -> [u8; 16] {
+//         todo!()
+//     }
+//
+//     fn start_session(self: Arc<Self>, version: u32, params: &quinn_proto::transport_parameters::TransportParameters) -> Box<dyn Session> {
+//         todo!()
+//     }
+// }

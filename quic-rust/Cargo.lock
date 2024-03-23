@@ -477,6 +477,7 @@ dependencies = [
  "clap",
  "directories-next",
  "quinn",
+ "quinn-proto",
  "rcgen",
  "rustls 0.22.1",
  "rustls-pki-types",
