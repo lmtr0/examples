@@ -1,0 +1,8 @@
+[package]
+name = "rust-iced"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+iced = { version = "0.12.1", features = ["wgpu", "image", "debug"] }
+iced_wgpu = { version = "0.12.1" }
